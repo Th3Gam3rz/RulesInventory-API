@@ -1,3 +1,5 @@
+package com.featuredepic.test;
+
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -70,8 +72,9 @@ public class RulesInventory {
 	 * Inventory.
 	 * 
 	 * @param  rule  The Rule.
+	 * @return       The Inventory
 	 */
-	public void addRule(Rule rule){
+	public RulesInventory addRule(Rule rule){
 		ItemStack item = new ItemStack(rule.getItem(), 1);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(rule.getName());
@@ -79,6 +82,7 @@ public class RulesInventory {
 		item.setItemMeta(meta);
 		getInventory().setItem(this.numberOfRules, item);
 		this.numberOfRules++;
+		return this;
 	}
 	
 	/**
@@ -86,11 +90,13 @@ public class RulesInventory {
 	 * Inventory at once.
 	 * 
 	 * @param  rules  The List of Rules.
+	 * @return        The Inventory.
 	 */
-	public void addMultipleRules(List<Rule> rules){
+	public RulesInventory addMultipleRules(List<Rule> rules){
 		for(Rule rule : rules){
 			addRule(rule);
 		}
+		return this;
 	}
 	
 	/**
@@ -102,6 +108,18 @@ public class RulesInventory {
 	public void openFor(Player p){
 		p.closeInventory();
 		p.openInventory(getInventory());
+	}
+	
+	/**
+	 * Opens the Rules Inventory for
+	 * multiple Players.
+	 * 
+	 * @param  players  The Players.
+	 */
+	public void openFor(Player[] players){
+		for(Player p : players){
+			openFor(p);
+		}
 	}
 
 }
