@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * @author FeaturedEpic
@@ -71,16 +70,11 @@ public class RulesInventory {
 	/**
 	 * Adds a Rule to the Rules Inventory.
 	 * 
-	 * @param rule
-	 *            The Rule.
+	 * @param item
+	 *            The Rule as an ItemStack.
 	 * @return The Inventory
 	 */
-	public RulesInventory addRule(Rule rule) {
-		ItemStack item = new ItemStack(rule.getItem(), 1);
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(rule.getName());
-		meta.setLore(rule.getDescription());
-		item.setItemMeta(meta);
+	public RulesInventory addRule(ItemStack item) {
 		getInventory().setItem(this.numberOfRules, item);
 		this.numberOfRules++;
 		return this;
@@ -89,13 +83,13 @@ public class RulesInventory {
 	/**
 	 * Adds several Rules to the Rules Inventory at once.
 	 * 
-	 * @param rules
-	 *            The List of Rules.
+	 * @param items
+	 *            The List of Rules as ItemStacks.
 	 * @return The Inventory.
 	 */
-	public RulesInventory addMultipleRules(List<Rule> rules) {
-		for (Rule rule : rules) {
-			addRule(rule);
+	public RulesInventory addMultipleRules(List<ItemStack> items) {
+		for (ItemStack item : items) {
+			addRule(item);
 		}
 		return this;
 	}
@@ -138,8 +132,6 @@ public class RulesInventory {
 	 *            The Players.
 	 * @param condition
 	 *            The Condition of the Player Filter.
-	 * @throws WrongConditionException
-	 *             The Exception thrown if an invalid Condition is passed.
 	 * @return The Inventory.
 	 */
 	public RulesInventory openFor(Player[] players, Condition condition) {
